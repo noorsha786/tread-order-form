@@ -1,0 +1,4 @@
+{
+  "validTickers": ["GS", "AAPL", "MSFT", "GOOGL", "TSLA"],
+  "buyingPower": 100000.0
+}
