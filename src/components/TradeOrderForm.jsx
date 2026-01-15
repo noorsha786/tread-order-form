@@ -5,8 +5,6 @@ import { resetTrade } from '../features/trade/tradeSlice';
 import tickerData from '../public/validate-ticker.json.json'
 import { useDebouncedValue } from '../hooks/useDebouncedValue';
 
-const BUYING_POWER = 100000;
-
 const initialState = {
     ticker: '',
     orderType: '',
@@ -120,13 +118,14 @@ export default function TradeOrderForm() {
             <br/> <br/>
                 <label>Order Type: </label>
                 <select
+                    data-testid="order-type"
                     value={state.orderType}
                     onChange={e =>
                         dispatchForm({ type: 'SET_FIELD', field: 'orderType', value: e.target.value })
                     }
                 >
                     <option value="">Select</option>
-                    <option value="LIMIT">Limit</option>
+                    <option value="LIMIT" data-testid="order-type-limt">Limit</option>
                     <option value="MARKET">Market</option>
                     <option value="STOP">Stop Loss</option>
                 </select>
@@ -146,9 +145,10 @@ export default function TradeOrderForm() {
             <br/> <br/>
                 {state.orderType === 'LIMIT' && (
                     <>
-                        <label>Limit Price</label>
+                        <label>Limit Price:</label>
                         <input
                         type="number"
+                        data-testid="Limit-price"
                         placeholder="Limit Price"
                         value={state.limitPrice}
                         onChange={e =>
@@ -167,7 +167,7 @@ export default function TradeOrderForm() {
 
             <div>Total Estimated Value: ${totalValue}</div>
 <br/>
-            {totalValue > BUYING_POWER && <div className='danger'>Exceeds Buying Power</div>}
+            {totalValue > tickerData?.buyingPower && <div className='danger'>Exceeds Buying Power</div>}
             <br/>
             <button>
                 {loading ? 'Processing...' : 'Submit'}
